@@ -1,5 +1,5 @@
 <?php
-class UsersManager
+class UserManager
 {
     private $_db;
     
@@ -12,8 +12,8 @@ class UsersManager
     }
     public function add(User $user){
         $querry = $this->_db->prepare("INSERT INTO user(email, 'password', roles VALUES($email ,$password, $roles");
-        $querry->blindValue();
-        $querry->blindValue();
+        
+       
     }
     public function delete(User $user):bool{
 
@@ -23,25 +23,25 @@ class UsersManager
         $sth->execute(array($id));
         $ligne = $sth->fetch();
 
-        $perso = new Personnage($ligne);
-        return $perso;
+        $user= new User($ligne);
+        return $user;
 
     }
     public function getList():array{
 
-        $listeDePersonnage = array();
+        $listeDeUser = array();
         // retourne la liste de tous les perosnnages 
-        $request = $this->_db->query('SELECT id, nom, `force`, degats, niveau, experience FROM personnages; ');
+        $request = $this->_db->query('SELECT * FROM users; ');
 
         while ($ligne = $request->fetch(PDO::FETCH_ASSOC))// Chauqe entrée seta recuoerer
         {
             // On passe les donnés (stock"s dans un tableau) concernant le personnae
 
-            $perso= new Personnage($ligne);
-            $listeDePersonnage[] = $perso; // Ajouter personnage au tableau 
+            $user= new User($ligne);
+            $listeDeUser[] = $user; // Ajouter personnage au tableau 
           
         }
-        return $listeDePersonnage;
+        return $listeDeUser;
 
     }
     

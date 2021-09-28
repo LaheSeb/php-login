@@ -1,53 +1,4 @@
-<?php
-
- // On demarre la session
-session_start();
- // on Verifie si les données du formulaire on été envoyé
-
-if((isset($_POST['email'])) && (!empty($_POST['email'])) )  {
-    $_SESSION['message'] = ' not empty-Nouveau type de livre : "'.$_POST['label'].'"';
-
-
-
-
-
- // On se connecte à la base de données
-
-include_once 'connect.php';
-
-try {
-    // On nettoi les données envoyés
- $email = strip_tags($_POST['email']);
- $password = strip_tags($_POST['password']);
-
- //On prepare la requete
-$sql = $this->_db->prepare("INSERT INTO user(email, 'password', roles VALUES($email ,$password, $roles");
-
-$stmt = mysqli_prepare($db,$sql);
-mysqli_stmt_bind_param($stmt,'s',$label);
-
- // On execute la requete
-mysqli_stmt_execute($stmt);
-mysqli_stmt_close($stmt);
-} catch (Exception $e) {
-    $_SESSION['erreur'] = "Une erreur est intervenue : ". $e->getMessage(); 
-}
-
- 
- // On redige un message pour l'utilisateur
- $_SESSION['message'] ='Le type de livre "'.$label.'" a été enregistré';
-
- // On ferme la connexion
- include_once 'close.php';
-
- // On renvoi vers la page principale
- header('Location: index.php');
- 
-}
- // On affiche le fomulaire de saiso d'uun nouveau type de livre
-
- ?>
- <!DOCTYPE html>
+<!DOCTYPE html>
  <html lang="en">
  <head>
      <meta charset="UTF-8">
@@ -75,12 +26,18 @@ mysqli_stmt_close($stmt);
                         }
 
                 ?>
-                <h1>Ajouter un type de livre</h1>
+                <h1>Ajouter un utilisateur</h1>
 
                 <form method="POST">
                     <div class="mb-3">
-                        <label>Libéllé</label>
-                        <input type ="text" id="label" name="label" class="form-control">
+                        <label>Email : </label>
+                        <input type ="text" id="email" name="email" class="form-control" placeholder="Rentrez votre adresse email....">
+                        <br>
+                        <label>Mot de pass : </label>
+                        <input type ="text" id="password" name="password" class="form-control" placeholder="Tapez votre mot de passe....">
+                        <br>
+                        <label>Roles de l'utilisateur  : </label>
+                        <input type ="text" id="roles" name="roles" class="form-control" placeholder="admin">
                     </div>
                         <button class="btn btn-primary">Enregistrer</button>
                         <a class ="btn btn-info"href="index.php"> Retour à la liste</a>

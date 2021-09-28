@@ -37,7 +37,7 @@
     </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
     <br><br><br>
-    <button type="button" href="#" class="w-100 btn btn-lg btn-primary">Inscription</button>
+    <button type="button" onclick="window.location.href='afficher.php'" class="w-100 btn btn-lg btn-primary">Ajouter un user</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2017–{{< year >}}</p>
   </form>
   <?php print_r("<br>email = '" .$_POST['email']."'")?>
