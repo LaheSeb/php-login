@@ -1,3 +1,45 @@
+<?php
+
+require_once('manager/UserManager.php');
+require_once('manager/User.php');
+ include ('header.php');
+try {
+    $db = new PDO($dsn, $user, $password);
+    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false); // Si toutes les colonnes sont converties en string
+
+   
+    $manager = new UserManager($db);
+
+    if ($_POST) {
+        if (isset($_POST['email']) && !empty($_POST['email'])) {
+
+            
+            $email = strip_tags($_POST['email']);
+            $passw = strip_tags($_POST['passw']);
+            $roles = strip_tags($_POST['roles']);
+
+            
+            $user = new User();
+            $user->setEmail($email);
+            $user->setPassword($passw);
+            $user->setRoles($roles);
+            if ($manager->add($user)) {
+                
+                $_SESSION['message'] = "VOus avez ajouté un user";
+            } else {
+                
+                $_SESSION['error'] = "ERREUR dan l'ajout";
+            };
+
+            
+            header('Location: afficher.php');
+        } 
+    }
+} catch (PDOException $e) {
+    print('<br/>Erreur de connexion : ' . $e->getMessage());
+}
+?>
+
 <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -34,7 +76,7 @@
                         <input type ="text" id="email" name="email" class="form-control" placeholder="Rentrez votre adresse email....">
                         <br>
                         <label>Mot de pass : </label>
-                        <input type ="text" id="password" name="password" class="form-control" placeholder="Tapez votre mot de passe....">
+                        <input type ="password" id="passw" name="passw" class="form-control" placeholder="Tapez votre mot de passe....">
                         <br>
                         <label>Roles de l'utilisateur  : </label>
                         <input type ="text" id="roles" name="roles" class="form-control" placeholder="admin">

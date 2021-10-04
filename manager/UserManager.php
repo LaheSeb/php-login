@@ -1,29 +1,40 @@
 <?php
+require_once('user.php');
 class UserManager
 {
     private $_db;
     
     public function setDb($db){
         $this->_db = $db;
+        return $this;
     }
-    public function __construct($db){
+    public function __construct( PDO $db){
         $this->setDb($db);
 
     }
-    public function add(User $user){
-        $querry = $this->_db->prepare("INSERT INTO user(email, 'password', roles VALUES($email ,$password, $roles");
-        
+    public function add(User $user):bool{
+        $query = $this->_db->prepare('INSERT INTO USERS (email, `password`, roles) VALUES (:email, :passw, :roles);');
+         
+         $query->bindValue(':email', $user->getEmail());
+         $query->bindValue(':passw', $user->getPassword());
+         $query->bindValue(':roles', $user->getRoles());
+         
+         return $query->execute();
        
     }
-    public function delete(User $user):bool{
+    public function delet(User $user):bool{
+  
+  $query = $this->_db->prepare("DELETE FROM USERS WHERE id = :id;");  
+  $query->bindValue(':id', $user->getId());
+  return $query->execute();
+
 
     }
     public function getOne(int $id){
-        $sth = $this->_db->prepare("SELECT id, nom, `force`, degats, niveau, experience FROM personnages Where id =? ");
+        $sth = $this->_db->prepare('SELECT id, email, `password`, roles FROM USERS WHERE id = ?');
         $sth->execute(array($id));
         $ligne = $sth->fetch();
-
-        $user= new User($ligne);
+        $user = new User($ligne);   
         return $user;
 
     }

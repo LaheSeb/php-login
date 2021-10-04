@@ -4,17 +4,17 @@ class User{
     private $_id;
     private $_email;
     private $_password;
-    private $_role;
+    private $_roles;
 
 
-    public function __construct (array $ligne)// Constructeur demande 3 parametres 
+    public function __construct (array $ligne=null)// Constructeur demande 3 parametres 
     {
         $this->hydrate($ligne);
         
 
     } 
 
-    public function hydrate(array $ligne)
+    public function hydrate(array $ligne=null)
     {
         foreach( $ligne as $key => $value)
         {
@@ -64,17 +64,17 @@ class User{
     /**
      * Get the value of _role
      */
-    public function getRole()
+    public function getRoles()
     {
-        return $this->_role;
+        return $this->_roles;
     }
 
     /**
      * Set the value of _role
      */
-    public function setRole($_role): self
+    public function setRoles($_roles): self
     {
-        $this->_role = $_role;
+        $this->_roles = $_roles;
 
         return $this;
     }

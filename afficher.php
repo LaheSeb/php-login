@@ -1,7 +1,7 @@
 <?php
 
 
-
+require_once('manager/UserManager.php');
  include ('header.php');
 
 ?>
@@ -52,7 +52,7 @@
     
         try {
             $db = new PDO ($dsn, $user, $password);
-            $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);// si toutes les colonnes sont 
+            $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);// Si toutes les colonnes sont converties en string
         
         
             $UserManager = new UserManager($db);
@@ -60,12 +60,16 @@
             print('<br>Liste des personnages : ');
            foreach ($users as $user)
            {
-            print('<td>'.$user->getId().'</td>');
-            print('<td>'.$user->getEmail().'</td>');
-            print('<td>'.$user->getPassword().'</td>');
-            print('<td>'.$user->getRole().'</td>');
-          
-        
+            ?>
+            <td>
+            <td><?=$user->getId()?></td>
+            <td><?=$user->getEmail()?></td>
+            <td><?=$user->getPassword()?></td>
+            <td><?=$user->getRoles()?></td>
+            <td><a alt="Voir "class="btn btn-primary" href="details.php?id=<?= $user->getId() ?>"><i class="far fa-eye"></i></a> 
+            <a alt="Edit "class="btn btn-info" href="edit.php?id=<?= $user->getId() ?>"><i class="fas fa-edit"></i></a> 
+            <a alt="Delet "class="btn btn-danger" href="delet.php?id=<?= $user->getId() ?>"><i class="fas fa-trash"></i></a></td>
+           </tr><?php
            }
         
         } catch (PDOException $e) {
