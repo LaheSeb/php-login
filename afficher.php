@@ -61,7 +61,7 @@ require_once('manager/UserManager.php');
            foreach ($users as $user)
            {
             ?>
-            <td>
+            
             <td><?=$user->getId()?></td>
             <td><?=$user->getEmail()?></td>
             <td><?=$user->getPassword()?></td>

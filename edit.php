@@ -13,14 +13,24 @@ try {
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false); // Si toutes les colonnes sont converties en string
 
     
-    $Usermanager = new UserManager($db);
+    
     if (isset($_GET['id']) && !empty($_GET['id'])) {
-        $id = strip_tags($_GET['id']);
+        $Usermanager = new UserManager($db);
+        $id =strip_tags($_GET['id']);
+        $email = strip_tags($_POST['email']);
+      
+        $roles = strip_tags($_POST['roles']);
+     
+       
         $user = $Usermanager->getOne($id);
+       
+        $user = new User();
+        $user->setEmail($email);
+        
+        $user->setRoles($roles);
     }
     else 
     header('Location: afficher.php');
-
         
        
 
@@ -42,7 +52,7 @@ try {
     <main class ="container">
         <div class="row">
             <section class="col-12">
-            <h1>Mofier le type de  livre <?php print($label); ?></h1>
+            <h1>Mofier le type de  livre </h1>
 
             <form method="POST">
             <div class="mb-3">
@@ -51,8 +61,10 @@ try {
             
                 
             <label for="label">Mail</label>
-            <input type="hidden" id='id_t' name="id_t" value="<?php $user->getId() ?>">
-            <input type="text" id="libelle" name="libelle" class="form-control" value="<?php print($label); ?>">
+            <input type="hidden" id='id' name="id" value="<?= $user->getId() ?>">
+            <input type="text" id="email" name="email" class="form-control" value="<?= $user->getEmail() ?>">
+            <label for="label">Roles</label>
+            <input type="text" id="roles" name="roles" class="form-control" value="<?= $user->getRoles() ?>">
             </div>
             <p>
             

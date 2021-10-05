@@ -21,8 +21,17 @@ try {
 
         $id = strip_tags($_GET['id']);
         $user = $Usermanager->getOne($id);
-        $Usermanager->delet($user);
+        if ($Usermanager->delet($user))
+        {
+            $_SESSION['message'] = "Bien supprimée";
+        }
+        
+        else {
+            $_SESSION['erreur'] = "probleme dans la supression";
+        }
         header('Location: afficher.php');
+
+     
 
 
             

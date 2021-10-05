@@ -14,7 +14,9 @@ try {
     
     $Usermanager = new UserManager($db);
     if (isset($_GET['id']) && !empty($_GET['id'])) {
-        $id = strip_tags($_GET['id']);
+        $id =strip_tags($_GET['id']);
+     
+       
         $user = $Usermanager->getOne($id);
     }
     else 
@@ -42,12 +44,12 @@ try {
         <div class="row">
             <section class="col-12">
             <h1>Details du type de livre</h1>
-            <p>ID : <?php $user->getId() ?> </p>
-            <p>Email : <?php $user->getEmail() ?> </p>
-            <p>Roles : <?php $user->getRoles() ?></p>
-            <a class ="btn btn-info" href="index.php"> Retour à la liste </a>
+            <p>ID : <?= $user->getId() ?> </p>
+            <p>Email : <?= $user->getEmail() ?> </p>
+            <p>Roles : <?= $user->getRoles()?></p>
+            <a class ="btn btn-info" href="afficher.php"> Retour à la liste </a>
             
-            <a class="btn btn-primary" href='edit.php?id_t=<?php $user->getId() ?>'>Modifier </a><br>
+            <a class="btn btn-primary" href='edit.php?id=<?php $user->getId() ?>'>Modifier </a><br>
             
             </p>
             </section>

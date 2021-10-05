@@ -30,10 +30,19 @@ class UserManager
 
 
     }
-    public function getOne(int $id){
-        $sth = $this->_db->prepare('SELECT id, email, `password`, roles FROM USERS WHERE id = ?');
-        $sth->execute(array($id));
-        $ligne = $sth->fetch();
+
+    public function Update(User $user):bool{
+        $query = $this->_db->prepare('UPDATE USERS SET email = :email , roles = :roles WHERE id = :id ;');  
+        $query->bindValue(':id', $user->getEmail());
+        $query->bindValue(':email', $user->getEmail());
+        $query->bindValue(':roles', $user->getRoles());
+         return $query->execute();
+         
+    }
+    public function getOne(int $id ){
+        $query = $this->_db->prepare('SELECT * FROM USERS WHERE id =?  ;' );
+        $query->execute(array($id));
+        $ligne = $query->fetch();
         $user = new User($ligne);   
         return $user;
 
