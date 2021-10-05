@@ -12,29 +12,31 @@ try {
     $db = new PDO($dsn, $user, $password);
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false); // Si toutes les colonnes sont converties en string
 
-    
-    
-    if (isset($_GET['id']) && !empty($_GET['id'])) {
-        $Usermanager = new UserManager($db);
-        $id =strip_tags($_GET['id']);
-        $email = strip_tags($_POST['email']);
-      
-        $roles = strip_tags($_POST['roles']);
-     
-       
-        $user = $Usermanager->getOne($id);
-       
-        $user = new User();
-        $user->setEmail($email);
-        
-        $user->setRoles($roles);
-    }
-    else 
-    header('Location: afficher.php');
-        
-       
+    // Créer une instance de la classe UserManager (un objet $manager)
+    $manager = new UserManager($db);
 
-    
+    if ($_POST) {
+        if (
+            isset($_POST['id']) && !empty($_POST['id'])
+            && isset($_POST['email']) && !empty($_POST['email'])
+            && isset($_POST['roles']) && !empty($_POST['roles'])
+        ) {
+
+            
+            $id = strip_tags($_POST['id']);
+            $email = strip_tags($_POST['email']);
+            $roles = strip_tags($_POST['roles']);
+
+            $user->Update($user);
+            $user = $manager->getOne($id);
+
+
+   }
+
+    }
+
+  
+   
 } catch (PDOException $e) {
     print('<br/>Erreur de connexion : ' . $e->getMessage());
 }
@@ -57,7 +59,7 @@ try {
             <form method="POST">
             <div class="mb-3">
 
-            <p>ID : <?php $user->getId() ?> </p>
+            <p>ID : <?= $user->getId() ?> </p>
             
                 
             <label for="label">Mail</label>

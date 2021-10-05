@@ -1,5 +1,9 @@
 <?php
-require_once('user.php');
+namespace App\Manager;
+
+use PDO;
+use  App\Entity\User;
+
 class UserManager
 {
     private $_db;

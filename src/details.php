@@ -14,6 +14,7 @@ try {
     
     $Usermanager = new UserManager($db);
     if (isset($_GET['id']) && !empty($_GET['id'])) {
+
         $id =strip_tags($_GET['id']);
      
        
@@ -49,7 +50,7 @@ try {
             <p>Roles : <?= $user->getRoles()?></p>
             <a class ="btn btn-info" href="afficher.php"> Retour à la liste </a>
             
-            <a class="btn btn-primary" href='edit.php?id=<?php $user->getId() ?>'>Modifier </a><br>
+            <a class="btn btn-primary" href='edit.php?id=<?php $user->Update($user) ?>'>Modifier </a><br>
             
             </p>
             </section>

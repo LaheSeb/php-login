@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Entity;
 class User{
     private $_id;
     private $_email;
