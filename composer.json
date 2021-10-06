@@ -1,20 +1,22 @@
 {
-    "name": "laheseb/php-login",
+    "name": "pacma/php-login",
     "description": "Small project to learn the composer tool",
     "type": "project",
     "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Pacma\\PhpLogin\\": "src/"
+        }
+    },
     "authors": [
         {
-            "name": "Lahe Seb",
-            "email": "seb.laheyne@gmail.com"
+            "name": "Seb14",
+            "email": "s.laheyne@laposte.net"
         }
     ],
     "minimum-stability": "stable",
     "require": {
         "monolog/monolog": "^2.3",
         "twig/twig": "^3.3"
-    },
-    "autoload": {
-        "psr-4": {"App\\": "src/ "}
     }
 }
